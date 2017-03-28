@@ -43,7 +43,69 @@ urlpatterns = [
     url(r'hello',hello),
 ]
 ```
-
 urlconf是松耦合的一个好例子
+
+
+### 3.第三章 模板引擎
+Template,Context
+
+一些流程控制和判断
+```
+{% if %}
+{% else %}
+{% elif %}
+{% endif %}
+
+{% for %}
+{% endfor %}
+
+{% for x, y in points %}
+    There is a point at {{x}},{{y}}
+{% endfor %}
+
+
+{# This is a comment #}
+```
+
+- filter
+```
+{{ name | lower }}
+{{ my_list | first | upper }}
+{{ bio | truncatewords: "30" }}
+{{ pub_date | date: "F j, Y" }}
+//详见Appendix E
+```
+
+- include
+```
+{% include 'nav.html' %}
+{% include 'include/nav.html' %}
+```
+
+- Inheritance
+
+- 修改settings文件
+```
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+```
+
+
+
+
+
 
 
