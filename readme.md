@@ -103,9 +103,55 @@ TEMPLATES = [
 ]
 ```
 
+### 4.第四章 模型
+python manage.py startapp books
 
 
+更详细的field类型详见Appendix B
+```
+// models.py
+from django.db import models
 
+
+class Publisher(models.Model):
+    name = models.CharField(max_length=30)
+    address = models.CharField(max_length=50)
+    city = models.CharField(max_length=60)
+    state_province = models.CharField(max_length=30)
+    country = models.CharField(max_length=50)
+    website = models.URLField()
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['name']
+
+
+class Author(models.Model):
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=40)
+    email = models.EmailField()
+
+    def __str__(self):
+        return u'%s %s' % (self.first_name, self.last_name)
+
+
+class Book(models.Model):
+    title = models.CharField(max_length=100)
+    authors = models.ManyToManyField(Author)
+    publisher = models.ForeignKey(Publisher)
+    publication_date = models.DateField()
+
+    def __str__(self):
+        return self.title
+```
+
+- 1.pym check #检查系统
+- 2.在settings中增加app
+- 3.pym makemigratons books #生成migrate
+- 4.pym sqlmigrate books 0001 #查看sql语法
+- 5.pym migrate
 
 
 
