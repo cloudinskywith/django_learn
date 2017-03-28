@@ -3,6 +3,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
 import datetime
+from mysite.books.models import Book
 
 
 def hello(request):
@@ -27,4 +28,16 @@ def hours_ahead(request, offset):
     html = "<html><body>In %s hours,it will be %s.</body></html>" % (offset, dt)
     return HttpResponse(html)
 
+
+def search_form(request):
+    return render(request, 'search_form.html')
+
+
+def search(request):
+    if 'q' in request.GET and request.GET['q']:
+        q = request.GET['q']
+        books = Book.objects.filter(title__icontains=q)
+        return render(request, 'search_results.html', {'books': books, 'query': q})
+    else:
+        return HttpResponse('Please submit a search term.')
 
