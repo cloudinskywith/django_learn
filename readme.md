@@ -184,6 +184,42 @@ admin.site.register(Book, BookAdmin)
 ```
 
 ### 6.第六章 forms
+```
+from django import forms
+
+
+class ContactForm(forms.Form):
+    subject = forms.CharField(max_length=100)
+    email = forms.EmailField(required=False, label='Your Email Address')
+    message = forms.CharField(widget=forms.Textarea)
+
+    def clean_message(self):
+        message = self.cleaned_data['message']
+        num_words = len(message.split())
+        if num_words < 4:
+            raise forms.ValidationError("Not Enough Words!")
+        return message
+
+
+{% if form.errors %}
+<p style="color: red;">
+    please correct the error {{ form.errors | pluralize }} below
+</p>
+{% endif %}
+
+<form action="" method="post">
+    <table>
+        {{form.as_table}}
+    </table>
+    {% csrf_token %}
+    <input type="submit" value="subject">
+</form>
+</body>
+</html>
+```
+
+
+
 
 
 

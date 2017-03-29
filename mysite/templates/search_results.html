@@ -3,6 +3,16 @@
     <title>Book Search</title>
 </head>
 <body>
-
+<p>You searched for: {{query}}</p>
+{% if books %}
+    <p>Found {{books | length}} book {{books | pluralize}}.</p>
+    <ul>
+        {% for book in books %}
+            <li>{{book.title}}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No books matched your search criteria.</p>
+{% endif %}
 </body>
 </html>
